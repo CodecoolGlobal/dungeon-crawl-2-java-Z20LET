@@ -13,9 +13,14 @@ public class Skeleton extends Actor {
     }
 
     @Override
+    public void move(int dx, int dy) {
+
+    }
+
+    @Override
     public void fight(int dx, int dy) {
         Actor enemy = cell.getNeighbor(dx, dy).getActor();
-        if (enemy.getClass().equals(Player.class)) {
+        if (enemy instanceof Player) {
             enemy.setHealth(enemy.getHealth() - 1);
         }
     }

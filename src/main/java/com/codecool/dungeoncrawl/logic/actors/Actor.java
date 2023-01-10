@@ -15,18 +15,20 @@ public abstract class Actor implements Drawable {
         this.cell.setActor(this);
     }
 
-    public void move(int dx, int dy) {
-        if (cell.getNeighbor(dx, dy).getType().equals(CellType.FLOOR) && cell.getNeighbor(dx, dy).getActor() == null)
-        {
-            Cell nextCell = cell.getNeighbor(dx, dy);
-            cell.setActor(null);
-            nextCell.setActor(this);
-            cell = nextCell;
-        }
-        else fight(dx, dy);
+    public void act(int dx, int dy) {
+        move(dx, dy);
+        checkFight(dx, dy);
     }
 
+    public abstract void move(int dx, int dy);
+
     public abstract void fight(int dx, int dy);
+
+    public void checkFight(int dx, int dy) {
+        fight(dx, dy);
+        Actor enemy = cell.getNeighbor(dx, dy).getActor();
+        if (enemy != null) enemy.fight(-dx, -dy);
+    }
 
     public int getHealth() {
         return health;
