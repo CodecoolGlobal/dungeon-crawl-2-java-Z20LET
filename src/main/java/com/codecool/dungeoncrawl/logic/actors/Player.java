@@ -4,10 +4,10 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 
 public class Player extends Actor {
-    private int health = getHealth();
-    private int armor = getArmor();
     public Player(Cell cell) {
         super(cell);
+        setHealth(20);
+        setArmor(0);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class Player extends Actor {
         Actor enemy = cell.getNeighbor(dx, dy).getActor();
         if (enemy != null) {
             enemy.setHealth(enemy.getHealth() - 1);
-            System.out.println(enemy.getHealth());
+            // System.out.println(enemy.getHealth());
         }
     }
 }

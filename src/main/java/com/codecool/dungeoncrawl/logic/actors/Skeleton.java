@@ -1,10 +1,13 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.CellType;
 
 public class Skeleton extends Actor {
     public Skeleton(Cell cell) {
         super(cell);
+        setHealth(8);
+        setArmor(0);
     }
 
     @Override
@@ -14,7 +17,14 @@ public class Skeleton extends Actor {
 
     @Override
     public void move(int dx, int dy) {
-
+        Direction dir = Direction.randomDirection();
+        if (cell.getNeighbor(dir.getDx(), dir.getDy()).getType().equals(CellType.FLOOR) && cell.getNeighbor(dir.getDx(), dir.getDy()).getActor() == null)
+        {
+            Cell nextCell = cell.getNeighbor(dx, dy);
+            cell.setActor(null);
+            nextCell.setActor(this);
+            cell = nextCell;
+        }
     }
 
     @Override
