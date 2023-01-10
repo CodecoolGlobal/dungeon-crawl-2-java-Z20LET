@@ -18,7 +18,8 @@ public class Player extends Actor {
     public void fight(int dx, int dy) {
         Actor enemy = cell.getNeighbor(dx, dy).getActor();
         if (enemy != null) {
-            
+            enemy.setHealth(enemy.getHealth() - 1);
         }
+        // System.out.println(enemy.getHealth());
     }
 }

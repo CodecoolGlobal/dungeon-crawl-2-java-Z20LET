@@ -23,6 +23,7 @@ public abstract class Actor implements Drawable {
             nextCell.setActor(this);
             cell = nextCell;
         }
+        else fight(dx, dy);
     }
 
     public abstract void fight(int dx, int dy);
@@ -33,6 +34,14 @@ public abstract class Actor implements Drawable {
 
     public int getArmor() {
         return armor;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void setArmor(int armor) {
+        this.armor = armor;
     }
 
     public Cell getCell() {
