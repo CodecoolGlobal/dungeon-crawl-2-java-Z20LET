@@ -5,7 +5,7 @@ import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.Drawable;
 
 public abstract class Actor implements Drawable {
-    private Cell cell;
+    protected Cell cell;
     private int health = 10;
 
     private int armor = 0;
@@ -25,8 +25,14 @@ public abstract class Actor implements Drawable {
         }
     }
 
+    public abstract void fight(int dx, int dy);
+
     public int getHealth() {
         return health;
+    }
+
+    public int getArmor() {
+        return armor;
     }
 
     public Cell getCell() {
