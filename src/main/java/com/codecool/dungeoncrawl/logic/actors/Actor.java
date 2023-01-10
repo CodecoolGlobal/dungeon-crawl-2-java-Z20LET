@@ -8,13 +8,15 @@ public abstract class Actor implements Drawable {
     private Cell cell;
     private int health = 10;
 
+    private int armor = 0;
+
     public Actor(Cell cell) {
         this.cell = cell;
         this.cell.setActor(this);
     }
 
     public void move(int dx, int dy) {
-        if (cell.getNeighbor(dx, dy).getType().equals(CellType.FLOOR))
+        if (cell.getNeighbor(dx, dy).getType().equals(CellType.FLOOR) && cell.getNeighbor(dx, dy).getActor() == null)
         {
             Cell nextCell = cell.getNeighbor(dx, dy);
             cell.setActor(null);
