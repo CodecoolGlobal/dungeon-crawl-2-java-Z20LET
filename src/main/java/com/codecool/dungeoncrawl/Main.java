@@ -53,24 +53,25 @@ public class Main extends Application {
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
-        for (Actor actor : map.getActors()) {
-            actor.act(0, 0);
-        }
         switch (keyEvent.getCode()) {
             case UP:
                 map.getPlayer().act(0, -1);
+                refreshActors();
                 refresh();
                 break;
             case DOWN:
                 map.getPlayer().act(0, 1);
+                refreshActors();
                 refresh();
                 break;
             case LEFT:
                 map.getPlayer().act(-1, 0);
+                refreshActors();
                 refresh();
                 break;
             case RIGHT:
                 map.getPlayer().act(1,0);
+                refreshActors();
                 refresh();
                 break;
         }
@@ -92,5 +93,12 @@ public class Main extends Application {
             }
         }
         healthLabel.setText("" + map.getPlayer().getHealth());
+    }
+
+    private void refreshActors() {
+        map.getActors().removeIf(actor -> actor.getCell().getActor() == null);
+        for (Actor actor : map.getActors()) {
+            actor.act(0, 0);
+        }
     }
 }
