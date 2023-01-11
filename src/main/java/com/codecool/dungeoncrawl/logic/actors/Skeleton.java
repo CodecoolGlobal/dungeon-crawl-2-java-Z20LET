@@ -8,6 +8,7 @@ public class Skeleton extends Actor {
         super(cell);
         setHealth(8);
         setArmor(0);
+        setDamage(1);
     }
 
     @Override
@@ -31,7 +32,8 @@ public class Skeleton extends Actor {
     public void fight(int dx, int dy) {
         Actor enemy = cell.getNeighbor(dx, dy).getActor();
         if (enemy instanceof Player) {
-            enemy.setHealth(enemy.getHealth() - 1);
+            int armor = enemy.getArmor();
+            if (armor < getDamage()) enemy.setHealth(enemy.getHealth() - this.getDamage());
         }
     }
 }

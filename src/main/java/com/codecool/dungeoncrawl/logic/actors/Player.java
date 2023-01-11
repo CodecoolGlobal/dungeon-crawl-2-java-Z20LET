@@ -8,6 +8,7 @@ public class Player extends Actor {
         super(cell);
         setHealth(20);
         setArmor(0);
+        setDamage(1);
     }
 
     @Override
@@ -30,8 +31,12 @@ public class Player extends Actor {
     public void fight(int dx, int dy) {
         Actor enemy = cell.getNeighbor(dx, dy).getActor();
         if (enemy != null) {
-            enemy.setHealth(enemy.getHealth() - 1);
-            // System.out.println(enemy.getHealth());
+            enemy.setHealth(enemy.getHealth() - this.getDamage());
+            if (enemy.getHealth() <= 0) kill(dx, dy);
         }
+    }
+
+    private void kill(int dx, int dy) {
+        cell.getNeighbor(dx, dy).setActor(null);
     }
 }
