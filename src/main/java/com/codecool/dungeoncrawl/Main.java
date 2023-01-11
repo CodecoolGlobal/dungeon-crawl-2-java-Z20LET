@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -53,27 +54,33 @@ public class Main extends Application {
     }
 
     private void onKeyPressed(KeyEvent keyEvent) {
-        switch (keyEvent.getCode()) {
-            case UP:
-                map.getPlayer().act(0, -1);
-                refreshActors();
-                refresh();
-                break;
-            case DOWN:
-                map.getPlayer().act(0, 1);
-                refreshActors();
-                refresh();
-                break;
-            case LEFT:
-                map.getPlayer().act(-1, 0);
-                refreshActors();
-                refresh();
-                break;
-            case RIGHT:
-                map.getPlayer().act(1,0);
-                refreshActors();
-                refresh();
-                break;
+        if (checkPlayerDead()) {
+            healthLabel.setText("You died!");
+            if (keyEvent.getCode() == KeyCode.R) map = MapLoader.loadMap();
+        }
+        else {
+            switch (keyEvent.getCode()) {
+                case UP:
+                    map.getPlayer().act(0, -1);
+                    refreshActors();
+                    refresh();
+                    break;
+                case DOWN:
+                    map.getPlayer().act(0, 1);
+                    refreshActors();
+                    refresh();
+                    break;
+                case LEFT:
+                    map.getPlayer().act(-1, 0);
+                    refreshActors();
+                    refresh();
+                    break;
+                case RIGHT:
+                    map.getPlayer().act(1,0);
+                    refreshActors();
+                    refresh();
+                    break;
+            }
         }
     }
 
@@ -100,5 +107,9 @@ public class Main extends Application {
         for (Actor actor : map.getActors()) {
             actor.act(0, 0);
         }
+    }
+
+    private boolean checkPlayerDead() {
+        return map.getPlayer().getHealth() <= 0;
     }
 }

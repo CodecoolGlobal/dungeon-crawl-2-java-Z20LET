@@ -33,7 +33,7 @@ public class Skeleton extends Actor {
         Actor enemy = cell.getNeighbor(dx, dy).getActor();
         if (enemy instanceof Player) {
             int armor = enemy.getArmor();
-            if (armor < getDamage()) enemy.setHealth(enemy.getHealth() - this.getDamage());
+            if (armor < getDamage()) enemy.setHealth(enemy.getHealth() - (this.getDamage() - armor));
         }
     }
 }
