@@ -21,7 +21,7 @@ public class Skeleton extends Actor {
         Direction dir = Direction.randomDirection();
         if (cell.getNeighbor(dir.getDx(), dir.getDy()).getType().equals(CellType.FLOOR) && cell.getNeighbor(dir.getDx(), dir.getDy()).getActor() == null)
         {
-            Cell nextCell = cell.getNeighbor(dx, dy);
+            Cell nextCell = cell.getNeighbor(dir.getDx(), dir.getDy());
             cell.setActor(null);
             nextCell.setActor(this);
             cell = nextCell;
