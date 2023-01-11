@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl.logic;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.actors.Skeleton;
 import com.codecool.dungeoncrawl.logic.items.BlueKey;
+import com.codecool.dungeoncrawl.logic.items.Sword;
 
 import java.io.InputStream;
 import java.util.Scanner;
@@ -47,11 +48,11 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             new BlueKey(cell);
                             break;
-                       /* case 'S':
+                        case 'S':
                             cell.setType(CellType.FLOOR);
                             new Sword(cell);
                             break;
-                        case 'a':
+                        /*case 'a':
                             cell.setType(CellType.FLOOR);
                             new Armor(cell);
                             break;
