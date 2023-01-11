@@ -2,6 +2,10 @@ package com.codecool.dungeoncrawl.logic.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
+import com.codecool.dungeoncrawl.logic.items.Item;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class Player extends Actor {
     public Player(Cell cell) {
@@ -11,9 +15,11 @@ public class Player extends Actor {
         setDamage(1);
     }
 
+    public Set<Item> inventory = new HashSet<>();
+
     @Override
     public String getTileName() {
-        return "player";
+        switch item
     }
 
     @Override
