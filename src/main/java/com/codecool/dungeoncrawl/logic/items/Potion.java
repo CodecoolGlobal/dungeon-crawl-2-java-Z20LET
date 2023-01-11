@@ -9,6 +9,16 @@ public class Potion extends Actor {
     public Potion(Cell cell) { super (cell); }
 
     @Override
+    public void move(int dx, int dy) {
+
+    }
+
+    @Override
+    public void fight(int dx, int dy) {
+
+    }
+
+    @Override
     public String getTileName() {
         return "potion";
     }
