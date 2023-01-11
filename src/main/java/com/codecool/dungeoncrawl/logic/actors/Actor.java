@@ -5,28 +5,54 @@ import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.Drawable;
 
 public abstract class Actor implements Drawable {
-    private Cell cell;
+    protected Cell cell;
     private int health = 10;
-
     private int armor = 0;
+
+    private int damage = 1;
 
     public Actor(Cell cell) {
         this.cell = cell;
         this.cell.setActor(this);
     }
 
-    public void move(int dx, int dy) {
-        if (cell.getNeighbor(dx, dy).getType().equals(CellType.FLOOR) && cell.getNeighbor(dx, dy).getActor() == null)
-        {
-            Cell nextCell = cell.getNeighbor(dx, dy);
-            cell.setActor(null);
-            nextCell.setActor(this);
-            cell = nextCell;
-        }
+    public void act(int dx, int dy) {
+        move(dx, dy);
+        checkFight(dx, dy);
+    }
+
+    public abstract void move(int dx, int dy);
+
+    public abstract void fight(int dx, int dy);
+
+    public void checkFight(int dx, int dy) {
+        fight(dx, dy);
+        Actor enemy = cell.getNeighbor(dx, dy).getActor();
+        if (enemy != null) enemy.fight(-dx, -dy);
     }
 
     public int getHealth() {
         return health;
+    }
+
+    public int getArmor() {
+        return armor;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void setArmor(int armor) {
+        this.armor = armor;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 
     public Cell getCell() {
