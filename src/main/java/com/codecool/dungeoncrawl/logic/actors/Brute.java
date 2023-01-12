@@ -8,7 +8,7 @@ public class Brute extends Actor {
         super(cell);
         setHealth(22);
         setArmor(2);
-        setDamage(5);
+        setDamage(7);
     }
 
     @Override
