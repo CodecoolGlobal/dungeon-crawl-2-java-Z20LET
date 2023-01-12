@@ -23,7 +23,7 @@ public class Player extends Actor {
         Player.inventory.add(item);
     }
 
-    public static Set<Item> getInventory(){
+    public Set<Item> getInventory(){
         return inventory;
     };
 

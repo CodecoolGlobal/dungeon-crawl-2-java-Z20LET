@@ -127,7 +127,6 @@ public class Main extends Application {
         healthLabel.setText("" + map.getPlayer().getHealth());
         armorLabel.setText("" + map.getPlayer().getArmor());
         damageLabel.setText("" + map.getPlayer().getDamage());
-        inventoryLabel.setText("" + Player.getInventory().getClass());
     }
 
     private void refreshActors() {
