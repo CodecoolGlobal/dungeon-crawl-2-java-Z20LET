@@ -65,6 +65,7 @@ public class Main extends Application {
                 map = MapLoader.loadMap();
                 map.getCell(deathX, deathY).setActor(new SkullPlayer(map.getCell(deathX, deathY)));
                 map.getPlayer().emptyInventory();
+                refresh();
             }
         }
         else {
