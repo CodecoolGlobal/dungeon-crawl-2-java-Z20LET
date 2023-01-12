@@ -92,6 +92,7 @@ public class Main extends Application {
                     break;
                 case SPACE:
                     Player.setInventory(map.getPlayer().getCell().getItem());
+                    map.getPlayer().getCell().getItem().interAct(map.getPlayer());
                     map.getPlayer().getCell().setItem(null);
                     refresh();
                     break;
