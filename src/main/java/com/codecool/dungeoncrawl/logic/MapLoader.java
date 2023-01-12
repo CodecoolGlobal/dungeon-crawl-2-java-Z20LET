@@ -34,6 +34,18 @@ public class MapLoader {
                         case '.':
                             cell.setType(CellType.FLOOR);
                             break;
+                        case 'D':
+                            cell.setType(CellType.DEMOD);
+                            break;
+                        case 'E':
+                            cell.setType(CellType.DEMOE);
+                            break;
+                        case 'M':
+                            cell.setType(CellType.DEMOM);
+                            break;
+                        case 'O':
+                            cell.setType(CellType.DEMOO);
+                            break;
                         case 's':
                             cell.setType(CellType.FLOOR);
                             map.addActor(new Skeleton(cell));

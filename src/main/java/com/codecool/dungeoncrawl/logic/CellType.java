@@ -5,7 +5,12 @@ public enum CellType {
     FLOOR("floor"),
     WATER("water"),
     WALL("wall"),
-    SKULL("skull");
+    SKULL("skull"),
+    //temp demo letter types
+    DEMOD("demod"),
+    DEMOE("demoe"),
+    DEMOM("demom"),
+    DEMOO("demoo");
     private final String tileName;
 
     CellType(String tileName) {
