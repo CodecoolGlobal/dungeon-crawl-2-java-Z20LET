@@ -17,7 +17,7 @@ public class Player extends Actor {
         setDamage(1);
     }
 
-    static Set<Item> inventory = new HashSet<>();
+    public static Set<Item> inventory = new HashSet<>();
 
     public static void setInventory(Item item) {
         Player.inventory.add(item);

@@ -10,12 +10,14 @@ public enum CellType {
     DEMOD("demod"),
     DEMOE("demoe"),
     DEMOM("demom"),
-    DEMOO("demoo");
-    private final String tileName;
+    DEMOO("demoo"),
+    DOOR("door-open");
+    private String tileName;
 
     CellType(String tileName) {
         this.tileName = tileName;
     }
+
 
     public String getTileName() {
         return tileName;

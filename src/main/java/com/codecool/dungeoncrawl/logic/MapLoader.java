@@ -1,10 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.actors.*;
-import com.codecool.dungeoncrawl.logic.items.Armor;
-import com.codecool.dungeoncrawl.logic.items.BlueKey;
-import com.codecool.dungeoncrawl.logic.items.Potion;
-import com.codecool.dungeoncrawl.logic.items.Sword;
+import com.codecool.dungeoncrawl.logic.items.*;
 
 import java.io.InputStream;
 import java.util.Scanner;
@@ -25,6 +22,10 @@ public class MapLoader {
                 if (x < line.length()) {
                     Cell cell = map.getCell(x, y);
                     switch (line.charAt(x)) {
+                        case 'C':
+                            cell.setType(CellType.FLOOR);
+                            new Door(cell);
+                            break;
                         case ' ':
                             cell.setType(CellType.EMPTY);
                             break;

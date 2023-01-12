@@ -3,9 +3,9 @@ package com.codecool.dungeoncrawl.logic.items;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 
-public class BlueKey extends Item {
+public class Door extends Item {
 
-    public BlueKey(Cell cell) { super (cell); }
+    public Door(Cell cell) { super (cell); }
 
     @Override
     public void interact(Player player) {
@@ -13,6 +13,10 @@ public class BlueKey extends Item {
 
     @Override
     public String getTileName() {
-        return "key";
+        if(Player.inventory.stream().noneMatch(e -> e instanceof BlueKey)){
+            return "door-close";
+        } else{
+            return "door-open";
+        }
     }
 }

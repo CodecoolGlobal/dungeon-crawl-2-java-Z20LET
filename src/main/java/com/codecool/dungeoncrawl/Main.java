@@ -43,7 +43,7 @@ public class Main extends Application {
         ui.add(new Label("Health: "), 0, 0);
         ui.add(new Label("Armor: "), 0,5);
         ui.add(new Label("Damage: "), 0,10);
-        ui.add(new Label("Inventory: "),0,15);
+        ui.add(new Label("Inventory:   W.I.P."),0,15);
 
         ui.add(healthLabel, 1, 0);
         ui.add(armorLabel,1,5 );
@@ -126,6 +126,7 @@ public class Main extends Application {
         healthLabel.setText("" + map.getPlayer().getHealth());
         armorLabel.setText("" + map.getPlayer().getArmor());
         damageLabel.setText("" + map.getPlayer().getDamage());
+        //inventoryLabel.setText();
     }
 
     private void refreshActors() {

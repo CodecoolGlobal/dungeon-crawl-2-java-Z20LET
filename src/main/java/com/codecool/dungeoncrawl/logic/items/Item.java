@@ -16,4 +16,5 @@ public abstract class Item implements Drawable {
     }
 
     public abstract void interact(Player player);
+
 }
