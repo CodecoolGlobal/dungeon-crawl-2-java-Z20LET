@@ -37,6 +37,7 @@ public class Tiles {
         tileMap.put("orc", new Tile(25, 9));
         tileMap.put("golem", new Tile(30, 6));
         tileMap.put("axolotl", new Tile(18, 8));
+        tileMap.put("brute", new Tile(27, 2));
         //decor
         tileMap.put("skull", new Tile(22, 23));
         tileMap.put("dead", new Tile(18, 24));

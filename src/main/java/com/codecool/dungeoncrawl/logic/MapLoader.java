@@ -66,6 +66,10 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             map.addActor(new Axolotl(cell));
                             break;
+                        case 'b':
+                            cell.setType(CellType.FLOOR);
+                            map.addActor(new Brute(cell));
+                            break;
                         case '@':
                             cell.setType(CellType.FLOOR);
                             map.setPlayer(new Player(cell));
