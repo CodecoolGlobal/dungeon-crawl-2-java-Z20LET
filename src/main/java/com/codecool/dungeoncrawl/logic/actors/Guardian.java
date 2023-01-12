@@ -3,10 +3,10 @@ package com.codecool.dungeoncrawl.logic.actors;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 
-public class Guard extends Actor {
+public class Guardian extends Actor {
     Direction currentDir = Direction.LEFT;
 
-    public Guard(Cell cell) {
+    public Guardian(Cell cell) {
         super(cell);
         setHealth(9);
         setArmor(1);
@@ -20,7 +20,7 @@ public class Guard extends Actor {
 
     @Override
     public void move(int dx, int dy) {
-        if (cell.getNeighbor(currentDir.getDx(), currentDir.getDy()).getType().equals(CellType.FLOOR) && cell.getNeighbor(currentDir.getDx(), currentDir.getDy()).getActor() == null)
+        if (cell.getNeighbor(currentDir.getDx(), currentDir.getDy()).getActor() == null)
         {
             switch (currentDir) {
                 case LEFT:
@@ -30,11 +30,10 @@ public class Guard extends Actor {
                     currentDir = Direction.LEFT;
             }
             Cell nextCell = cell.getNeighbor(currentDir.getDx(), currentDir.getDy());
-            cell.setActor(null);
-            nextCell.setActor(this);
-            cell = nextCell;
-            if (nextCell.getActor() == null) {
-
+            if (nextCell.getType().equals(CellType.FLOOR) && nextCell.getActor() == null) {
+                cell.setActor(null);
+                nextCell.setActor(this);
+                cell = nextCell;
             }
         }
     }
