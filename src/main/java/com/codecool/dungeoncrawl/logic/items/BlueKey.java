@@ -9,7 +9,7 @@ public class BlueKey extends Item {
     public BlueKey(Cell cell) { super (cell); }
 
     @Override
-    public void interAct(Player player) {
+    public void interact(Player player) {
 
     }
 

@@ -9,7 +9,7 @@ public class Sword extends Item {
     public Sword(Cell cell) { super (cell); }
 
     @Override
-    public void interAct(Player player) {
+    public void interact(Player player) {
         player.setDamage(player.getDamage() + 1);
     }
 
