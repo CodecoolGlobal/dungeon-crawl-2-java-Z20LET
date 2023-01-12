@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
+import com.codecool.dungeoncrawl.logic.actors.SkullPlayer;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -56,7 +57,12 @@ public class Main extends Application {
     private void onKeyPressed(KeyEvent keyEvent) {
         if (checkPlayerDead()) {
             healthLabel.setText("You died!");
-            if (keyEvent.getCode() == KeyCode.R) map = MapLoader.loadMap();
+            int deathX = map.getPlayer().getCell().getX();
+            int deathY = map.getPlayer().getCell().getY();
+            if (keyEvent.getCode() == KeyCode.R) {
+                map = MapLoader.loadMap();
+                map.getCell(deathX, deathY).setActor(new SkullPlayer(map.getCell(deathX, deathY)));
+            }
         }
         else {
             switch (keyEvent.getCode()) {
