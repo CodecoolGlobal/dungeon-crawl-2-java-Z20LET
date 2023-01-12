@@ -4,6 +4,8 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
+import com.codecool.dungeoncrawl.logic.actors.Player;
+import com.codecool.dungeoncrawl.logic.items.Item;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -71,6 +73,11 @@ public class Main extends Application {
                 break;
             case RIGHT:
                 map.getPlayer().act(1,0);
+                refresh();
+                break;
+            case SPACE:
+                Player.setInventory(map.getPlayer().getCell().getItem());
+                map.getPlayer().getCell().setItem(null);
                 refresh();
                 break;
         }
