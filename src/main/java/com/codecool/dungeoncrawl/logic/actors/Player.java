@@ -24,6 +24,8 @@ public class Player extends Actor {
         Player.inventory.add(item);
     }
 
+    public static void emptyInventory() { inventory.removeAll(inventory); }
+
     @Override
     public String getTileName() {
         if (!inventory.stream().noneMatch(e -> e instanceof Armor) && inventory.stream().noneMatch(e -> e instanceof Sword)) {

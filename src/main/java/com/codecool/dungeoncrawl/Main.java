@@ -64,6 +64,7 @@ public class Main extends Application {
             if (keyEvent.getCode() == KeyCode.R) {
                 map = MapLoader.loadMap();
                 map.getCell(deathX, deathY).setActor(new SkullPlayer(map.getCell(deathX, deathY)));
+                map.getPlayer().emptyInventory();
             }
         }
         else {
