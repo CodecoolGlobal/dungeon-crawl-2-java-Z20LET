@@ -24,6 +24,10 @@ public class Player extends Actor {
         Player.inventory.add(item);
     }
 
+    public static Set<Item> getInventory(){
+        return inventory;
+    };
+
     public static void emptyInventory() { inventory.removeAll(inventory); }
 
     @Override

@@ -10,7 +10,7 @@ public class Sword extends Item {
 
     @Override
     public void interAct(Player player) {
-
+        player.setDamage(player.getDamage() + 1);
     }
 
     @Override
