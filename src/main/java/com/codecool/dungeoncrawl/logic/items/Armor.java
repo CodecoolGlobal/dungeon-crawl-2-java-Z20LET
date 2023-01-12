@@ -14,7 +14,7 @@ public class Armor extends Item {
     }
 
     @Override
-    public void interAct(Player player){
+    public void interact(Player player){
         player.setArmor(player.getArmor() + 1);
     }
 }

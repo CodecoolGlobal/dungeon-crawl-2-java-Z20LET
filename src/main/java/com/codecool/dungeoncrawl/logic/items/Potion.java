@@ -9,7 +9,7 @@ public class Potion extends Item {
     public Potion(Cell cell) { super (cell); }
 
     @Override
-    public void interAct(Player player) {
+    public void interact(Player player) {
         player.setHealth(player.getHealth() + 10);
     }
 

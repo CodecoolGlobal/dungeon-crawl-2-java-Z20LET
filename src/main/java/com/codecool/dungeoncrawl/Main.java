@@ -6,7 +6,6 @@ import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.SkullPlayer;
 import com.codecool.dungeoncrawl.logic.actors.Player;
-import com.codecool.dungeoncrawl.logic.items.Item;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -101,7 +100,7 @@ public class Main extends Application {
                     break;
                 case SPACE:
                     Player.setInventory(map.getPlayer().getCell().getItem());
-                    map.getPlayer().getCell().getItem().interAct(map.getPlayer());
+                    map.getPlayer().getCell().getItem().interact(map.getPlayer());
                     map.getPlayer().getCell().setItem(null);
                     refresh();
                     break;
