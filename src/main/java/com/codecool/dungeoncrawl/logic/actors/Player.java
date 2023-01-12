@@ -4,7 +4,6 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.items.Armor;
 import com.codecool.dungeoncrawl.logic.items.Item;
-import com.codecool.dungeoncrawl.logic.items.Potion;
 import com.codecool.dungeoncrawl.logic.items.Sword;
 
 import java.util.HashSet;

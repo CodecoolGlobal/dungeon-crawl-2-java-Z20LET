@@ -9,7 +9,7 @@ public class Guardian extends Actor {
     public Guardian(Cell cell) {
         super(cell);
         setHealth(9);
-        setArmor(1);
+        setArmor(2);
         setDamage(2);
     }
 

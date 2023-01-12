@@ -10,7 +10,7 @@ public class Orc extends Actor {
         super(cell);
         setHealth(7);
         setArmor(2);
-        setDamage(1);
+        setDamage(3);
     }
 
     @Override

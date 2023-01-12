@@ -52,7 +52,7 @@ public class Main extends Application {
         refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
 
-        primaryStage.setTitle("Dungeon Crawl");
+        primaryStage.setTitle("Blue Dungeon - Demo");
         primaryStage.show();
     }
 
