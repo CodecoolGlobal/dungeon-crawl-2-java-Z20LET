@@ -61,8 +61,6 @@ public class Player extends Actor {
         }
     }
 
-
-
     private void kill(int dx, int dy) {
         cell.getNeighbor(dx, dy).setActor(null);
     }
