@@ -23,6 +23,10 @@ public class Player extends Actor {
         Player.inventory.add(item);
     }
 
+    public static Set<Item> getInventory(){
+        return inventory;
+    };
+
     public static void emptyInventory() { inventory.removeAll(inventory); }
 
     @Override
@@ -56,6 +60,8 @@ public class Player extends Actor {
             if (enemy.getHealth() <= 0) kill(dx, dy);
         }
     }
+
+
 
     private void kill(int dx, int dy) {
         cell.getNeighbor(dx, dy).setActor(null);
