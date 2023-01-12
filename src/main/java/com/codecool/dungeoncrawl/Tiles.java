@@ -43,7 +43,7 @@ public class Tiles {
         //items
         tileMap.put("key", new Tile(17, 23));
         tileMap.put("sword", new Tile(0, 30));
-        tileMap.put("armor", new Tile(0, 23));
+        tileMap.put("armor", new Tile(6, 24));
         tileMap.put("potion", new Tile(16, 25));
         //temp demo letters
         tileMap.put("demod", new Tile(22, 30));
