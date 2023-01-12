@@ -3,17 +3,17 @@ package com.codecool.dungeoncrawl.logic.actors;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 
-public class Skeleton extends Actor {
-    public Skeleton(Cell cell) {
+public class Axolotl extends Actor {
+    public Axolotl(Cell cell) {
         super(cell);
-        setHealth(8);
+        setHealth(4);
         setArmor(0);
-        setDamage(1);
+        setDamage(0);
     }
 
     @Override
     public String getTileName() {
-        return "skeleton";
+        return "axolotl";
     }
 
     @Override
@@ -29,11 +29,5 @@ public class Skeleton extends Actor {
     }
 
     @Override
-    public void fight(int dx, int dy) {
-        Actor enemy = cell.getNeighbor(dx, dy).getActor();
-        if (enemy instanceof Player) {
-            int armor = enemy.getArmor();
-            if (armor < getDamage()) enemy.setHealth(enemy.getHealth() - (this.getDamage() - armor));
-        }
-    }
+    public void fight(int dx, int dy) {}
 }

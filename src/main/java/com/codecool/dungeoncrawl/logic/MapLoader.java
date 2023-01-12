@@ -1,7 +1,6 @@
 package com.codecool.dungeoncrawl.logic;
 
-import com.codecool.dungeoncrawl.logic.actors.Player;
-import com.codecool.dungeoncrawl.logic.actors.Skeleton;
+import com.codecool.dungeoncrawl.logic.actors.*;
 import com.codecool.dungeoncrawl.logic.items.Armor;
 import com.codecool.dungeoncrawl.logic.items.BlueKey;
 import com.codecool.dungeoncrawl.logic.items.Potion;
@@ -35,9 +34,37 @@ public class MapLoader {
                         case '.':
                             cell.setType(CellType.FLOOR);
                             break;
+                        case 'D':
+                            cell.setType(CellType.DEMOD);
+                            break;
+                        case 'E':
+                            cell.setType(CellType.DEMOE);
+                            break;
+                        case 'M':
+                            cell.setType(CellType.DEMOM);
+                            break;
+                        case 'O':
+                            cell.setType(CellType.DEMOO);
+                            break;
                         case 's':
                             cell.setType(CellType.FLOOR);
                             map.addActor(new Skeleton(cell));
+                            break;
+                        case 'g':
+                            cell.setType(CellType.FLOOR);
+                            map.addActor(new Guardian(cell));
+                            break;
+                        case 'r':
+                            cell.setType(CellType.FLOOR);
+                            map.addActor(new Orc(cell));
+                            break;
+                        case 'l':
+                            cell.setType(CellType.FLOOR);
+                            map.addActor(new Golem(cell));
+                            break;
+                        case 'x':
+                            cell.setType(CellType.FLOOR);
+                            map.addActor(new Axolotl(cell));
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
