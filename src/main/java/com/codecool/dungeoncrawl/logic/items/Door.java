@@ -5,15 +5,20 @@ import com.codecool.dungeoncrawl.logic.actors.Player;
 
 public class Door extends Item {
 
-    public Door(Cell cell) { super (cell); }
+    private Player player;
+    public Door(Cell cell, Player player) {
+        super (cell);
+        this.player = player;
+    }
 
     @Override
     public void interact(Player player) {
+
     }
 
     @Override
     public String getTileName() {
-        if(Player.inventory.stream().noneMatch(e -> e instanceof BlueKey)){
+        if(player == null || !player.hasKey()){
             return "door-close";
         } else{
             return "door-open";

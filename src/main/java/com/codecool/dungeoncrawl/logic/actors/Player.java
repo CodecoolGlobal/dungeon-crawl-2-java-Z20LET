@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl.logic.actors;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.items.Armor;
+import com.codecool.dungeoncrawl.logic.items.BlueKey;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import com.codecool.dungeoncrawl.logic.items.Sword;
 
@@ -10,24 +11,28 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Player extends Actor {
+    private Set<Item> inventory;
+
     public Player(Cell cell) {
         super(cell);
         setHealth(20);
         setArmor(0);
         setDamage(1);
+        inventory = new HashSet<>();
     }
 
-    public static Set<Item> inventory = new HashSet<>();
-
-    public static void setInventory(Item item) {
-        Player.inventory.add(item);
+    public void addToInventory(Item item) {
+        this.inventory.add(item);
     }
 
-    public Set<Item> getInventory(){
+    public Set<Item> getInventory() {
         return inventory;
-    };
+    }
 
-    public static void emptyInventory() { inventory.removeAll(inventory); }
+
+    public void emptyInventory() {
+        inventory.removeAll(inventory);
+    }
 
     @Override
     public String getTileName() {
@@ -40,6 +45,10 @@ public class Player extends Actor {
         } else {
             return "default";
         }
+    }
+
+    public boolean hasKey(){
+        return inventory.stream().anyMatch(e -> e instanceof BlueKey);
     }
 
     @Override

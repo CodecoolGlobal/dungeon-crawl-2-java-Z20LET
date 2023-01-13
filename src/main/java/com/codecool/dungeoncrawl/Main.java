@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     GameMap map = MapLoader.loadMap();
+    Player player;
     Canvas canvas = new Canvas(
             map.getWidth() * Tiles.TILE_WIDTH,
             map.getHeight() * Tiles.TILE_WIDTH);
@@ -29,6 +30,7 @@ public class Main extends Application {
     Label armorLabel = new Label();
     Label damageLabel = new Label();
     Label inventoryLabel = new Label();
+
 
     public static void main(String[] args) {
         launch(args);
@@ -41,18 +43,18 @@ public class Main extends Application {
         ui.setPadding(new Insets(10));
 
         ui.add(new Label("Health: "), 0, 0);
-        ui.add(new Label("Armor: "), 0,5);
-        ui.add(new Label("Damage: "), 0,10);
-        ui.add(new Label("Inventory:   W.I.P."),0,15);
+        ui.add(new Label("Armor: "), 0, 5);
+        ui.add(new Label("Damage: "), 0, 10);
+        ui.add(new Label("Inventory:   W.I.P."), 0, 15);
         ui.add(new Label("←↑→↓ - Movement"), 0, 20);
         ui.add(new Label("space - Pickup"), 0, 25);
         ui.add(new Label("R - Respawn"), 0, 30);
         ui.add(new Label("DEMO version"), 0, 35);
 
         ui.add(healthLabel, 1, 0);
-        ui.add(armorLabel,1,5 );
-        ui.add(damageLabel,1,10);
-        ui.add(inventoryLabel,1,15);
+        ui.add(armorLabel, 1, 5);
+        ui.add(damageLabel, 1, 10);
+        ui.add(inventoryLabel, 1, 15);
 
         BorderPane borderPane = new BorderPane();
 
@@ -61,6 +63,7 @@ public class Main extends Application {
 
         Scene scene = new Scene(borderPane);
         primaryStage.setScene(scene);
+        player = map.getPlayer();
         refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
 
@@ -71,42 +74,44 @@ public class Main extends Application {
     private void onKeyPressed(KeyEvent keyEvent) {
         if (checkPlayerDead()) {
             healthLabel.setText("You died!");
-            int deathX = map.getPlayer().getCell().getX();
-            int deathY = map.getPlayer().getCell().getY();
+            int deathX = player.getCell().getX();
+            int deathY = player.getCell().getY();
             if (keyEvent.getCode() == KeyCode.R) {
                 map = MapLoader.loadMap();
+                player = map.getPlayer();
                 map.getCell(deathX, deathY).setActor(new SkullPlayer(map.getCell(deathX, deathY)));
-                map.getPlayer().emptyInventory();
+                player.emptyInventory();
                 refresh();
             }
-        }
-        else {
+        } else {
             switch (keyEvent.getCode()) {
                 case UP:
-                    map.getPlayer().act(0, -1);
+                    player.act(0, -1);
                     refreshActors();
                     refresh();
                     break;
                 case DOWN:
-                    map.getPlayer().act(0, 1);
+                    player.act(0, 1);
                     refreshActors();
                     refresh();
                     break;
                 case LEFT:
-                    map.getPlayer().act(-1, 0);
+                    player.act(-1, 0);
                     refreshActors();
                     refresh();
                     break;
                 case RIGHT:
-                    map.getPlayer().act(1,0);
+                    player.act(1, 0);
                     refreshActors();
                     refresh();
                     break;
                 case SPACE:
-                    Player.setInventory(map.getPlayer().getCell().getItem());
-                    map.getPlayer().getCell().getItem().interact(map.getPlayer());
-                    map.getPlayer().getCell().setItem(null);
-                    refresh();
+                    if (player.getCell().getItem() != null) {
+                        player.addToInventory(player.getCell().getItem());
+                        player.getCell().getItem().interact(player);
+                        player.getCell().setItem(null);
+                        refresh();
+                    }
                     break;
             }
         }
@@ -127,9 +132,9 @@ public class Main extends Application {
                 }
             }
         }
-        healthLabel.setText("" + map.getPlayer().getHealth());
-        armorLabel.setText("" + map.getPlayer().getArmor());
-        damageLabel.setText("" + map.getPlayer().getDamage());
+        healthLabel.setText("" + player.getHealth());
+        armorLabel.setText("" + player.getArmor());
+        damageLabel.setText("" + player.getDamage());
         //inventoryLabel.setText();
     }
 
@@ -141,6 +146,6 @@ public class Main extends Application {
     }
 
     private boolean checkPlayerDead() {
-        return map.getPlayer().getHealth() <= 0;
+        return player.getHealth() <= 0;
     }
 }

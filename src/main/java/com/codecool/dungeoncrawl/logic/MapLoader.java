@@ -24,7 +24,7 @@ public class MapLoader {
                     switch (line.charAt(x)) {
                         case 'C':
                             cell.setType(CellType.FLOOR);
-                            new Door(cell);
+                            new Door(cell, map.getPlayer());
                             break;
                         case ' ':
                             cell.setType(CellType.EMPTY);
