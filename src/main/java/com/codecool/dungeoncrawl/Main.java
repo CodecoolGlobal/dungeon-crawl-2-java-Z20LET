@@ -1,9 +1,11 @@
 package com.codecool.dungeoncrawl;
 
-import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.logic.actors.Actor;
+import com.codecool.dungeoncrawl.logic.actors.SkullPlayer;
+import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -12,8 +14,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -24,11 +24,16 @@ import java.sql.SQLException;
 
 public class Main extends Application {
     GameMap map = MapLoader.loadMap();
+    Player player;
     Canvas canvas = new Canvas(
             map.getWidth() * Tiles.TILE_WIDTH,
             map.getHeight() * Tiles.TILE_WIDTH);
     GraphicsContext context = canvas.getGraphicsContext2D();
     Label healthLabel = new Label();
+    Label armorLabel = new Label();
+    Label damageLabel = new Label();
+    Label inventoryLabel = new Label();
+
     GameDatabaseManager dbManager;
 
     public static void main(String[] args) {
@@ -43,7 +48,18 @@ public class Main extends Application {
         ui.setPadding(new Insets(10));
 
         ui.add(new Label("Health: "), 0, 0);
+        ui.add(new Label("Armor: "), 0, 5);
+        ui.add(new Label("Damage: "), 0, 10);
+        ui.add(new Label("Inventory:   W.I.P."), 0, 15);
+        ui.add(new Label("←↑→↓ - Movement"), 0, 20);
+        ui.add(new Label("space - Pickup"), 0, 25);
+        ui.add(new Label("R - Respawn"), 0, 30);
+        ui.add(new Label("DEMO version"), 0, 35);
+
         ui.add(healthLabel, 1, 0);
+        ui.add(armorLabel, 1, 5);
+        ui.add(damageLabel, 1, 10);
+        ui.add(inventoryLabel, 1, 15);
 
         BorderPane borderPane = new BorderPane();
 
@@ -52,46 +68,62 @@ public class Main extends Application {
 
         Scene scene = new Scene(borderPane);
         primaryStage.setScene(scene);
+        player = map.getPlayer();
         refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
-        scene.setOnKeyReleased(this::onKeyReleased);
+        //scene.setOnKeyReleased(this::onKeyReleased);
 
-        primaryStage.setTitle("Dungeon Crawl");
+        primaryStage.setTitle("Blue Dungeon - Demo");
         primaryStage.show();
     }
 
-    private void onKeyReleased(KeyEvent keyEvent) {
-        KeyCombination exitCombinationMac = new KeyCodeCombination(KeyCode.W, KeyCombination.SHORTCUT_DOWN);
-        KeyCombination exitCombinationWin = new KeyCodeCombination(KeyCode.F4, KeyCombination.ALT_DOWN);
-        if (exitCombinationMac.match(keyEvent)
-                || exitCombinationWin.match(keyEvent)
-                || keyEvent.getCode() == KeyCode.ESCAPE) {
-            exit();
-        }
-    }
-
     private void onKeyPressed(KeyEvent keyEvent) {
-        switch (keyEvent.getCode()) {
-            case UP:
-                map.getPlayer().move(0, -1);
+        if (checkPlayerDead()) {
+            healthLabel.setText("You died!");
+            int deathX = player.getCell().getX();
+            int deathY = player.getCell().getY();
+            if (keyEvent.getCode() == KeyCode.R) {
+                map = MapLoader.loadMap();
+                player = map.getPlayer();
+                map.getCell(deathX, deathY).setActor(new SkullPlayer(map.getCell(deathX, deathY)));
+                player.emptyInventory();
                 refresh();
-                break;
-            case DOWN:
-                map.getPlayer().move(0, 1);
-                refresh();
-                break;
-            case LEFT:
-                map.getPlayer().move(-1, 0);
-                refresh();
-                break;
-            case RIGHT:
-                map.getPlayer().move(1, 0);
-                refresh();
-                break;
-            case S:
-                Player player = map.getPlayer();
-                dbManager.savePlayer(player);
-                break;
+            }
+        } else {
+            switch (keyEvent.getCode()) {
+                case UP:
+                    player.act(0, -1);
+                    refreshActors();
+                    refresh();
+                    break;
+                case DOWN:
+                    player.act(0, 1);
+                    refreshActors();
+                    refresh();
+                    break;
+                case LEFT:
+                    player.act(-1, 0);
+                    refreshActors();
+                    refresh();
+                    break;
+                case RIGHT:
+                    player.act(1, 0);
+                    refreshActors();
+                    refresh();
+                    break;
+                case SPACE:
+                    if (player.getCell().getItem() != null) {
+                        player.addToInventory(player.getCell().getItem());
+                        player.getCell().getItem().interact(player);
+                        player.getCell().setItem(null);
+                        refresh();
+                    }
+                    break;
+                case S:
+                    Player player = map.getPlayer();
+                    dbManager.savePlayer(player);
+                    break;
+            }
         }
     }
 
@@ -103,12 +135,28 @@ public class Main extends Application {
                 Cell cell = map.getCell(x, y);
                 if (cell.getActor() != null) {
                     Tiles.drawTile(context, cell.getActor(), x, y);
+                } else if (cell.getItem() != null) {
+                    Tiles.drawTile(context, cell.getItem(), x, y);
                 } else {
                     Tiles.drawTile(context, cell, x, y);
                 }
             }
         }
-        healthLabel.setText("" + map.getPlayer().getHealth());
+        healthLabel.setText("" + player.getHealth());
+        armorLabel.setText("" + player.getArmor());
+        damageLabel.setText("" + player.getDamage());
+        //inventoryLabel.setText();
+    }
+
+    private void refreshActors() {
+        map.getActors().removeIf(actor -> actor.getCell().getActor() == null);
+        for (Actor actor : map.getActors()) {
+            actor.act(0, 0);
+        }
+    }
+
+    private boolean checkPlayerDead() {
+        return player.getHealth() <= 0;
     }
 
     private void setupDbManager() {
@@ -118,14 +166,5 @@ public class Main extends Application {
         } catch (SQLException ex) {
             System.out.println("Cannot connect to database.");
         }
-    }
-
-    private void exit() {
-        try {
-            stop();
-        } catch (Exception e) {
-            System.exit(1);
-        }
-        System.exit(0);
     }
 }
