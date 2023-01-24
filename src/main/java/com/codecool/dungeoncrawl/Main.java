@@ -54,7 +54,8 @@ public class Main extends Application {
         ui.add(new Label("←↑→↓ - Movement"), 0, 20);
         ui.add(new Label("space - Pickup"), 0, 25);
         ui.add(new Label("R - Respawn"), 0, 30);
-        ui.add(new Label("DEMO version"), 0, 35);
+        ui.add(new Label("S - save"), 0, 35);
+        ui.add(new Label("DEMO version"), 0, 40);
 
         ui.add(healthLabel, 1, 0);
         ui.add(armorLabel, 1, 5);
