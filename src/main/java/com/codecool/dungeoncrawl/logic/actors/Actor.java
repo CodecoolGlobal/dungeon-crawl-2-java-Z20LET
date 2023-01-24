@@ -6,10 +6,10 @@ import com.codecool.dungeoncrawl.logic.Drawable;
 
 public abstract class Actor implements Drawable {
     protected Cell cell;
-    private int health = 10;
-    private int armor = 0;
+    private int health;
+    private int armor;
 
-    private int damage = 1;
+    private int damage;
 
     public Actor(Cell cell) {
         this.cell = cell;

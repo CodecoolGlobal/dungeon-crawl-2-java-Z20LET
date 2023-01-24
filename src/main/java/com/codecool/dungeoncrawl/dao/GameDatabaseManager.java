@@ -6,6 +6,7 @@ import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.util.Map;
 
 public class GameDatabaseManager {
     private PlayerDao playerDao;
@@ -22,10 +23,10 @@ public class GameDatabaseManager {
 
     private DataSource connect() throws SQLException {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
+        Map<String, String> envs = System.getenv();
         String dbName = "dungeon";
-        String user = "marciiz20let";
-        String password = "1995";
-
+        String user = envs.get("MY_PSQL_USER");
+        String password = envs.get("MY_PSQL_PASSWORD");
         dataSource.setDatabaseName(dbName);
         dataSource.setUser(user);
         dataSource.setPassword(password);

@@ -1,6 +1,6 @@
 package com.codecool.dungeoncrawl.logic.actors;
 
-public enum playerSkin {
+public enum PlayerSkin {
     DEFAULT("default"),
     ARMORED("armored"),
     SWORDED("sworded"),
@@ -8,7 +8,7 @@ public enum playerSkin {
 
     public String skinName;
 
-    playerSkin(String skinName) {
+    PlayerSkin(String skinName) {
         this.skinName = skinName;
     }
 
