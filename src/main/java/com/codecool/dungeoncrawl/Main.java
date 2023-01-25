@@ -33,7 +33,6 @@ public class Main extends Application {
     Label armorLabel = new Label();
     Label damageLabel = new Label();
     Label inventoryLabel = new Label();
-
     GameDatabaseManager dbManager;
 
     public static void main(String[] args) {
@@ -80,7 +79,7 @@ public class Main extends Application {
 
     private void onKeyPressed(KeyEvent keyEvent) {
         if (checkPlayerDead()) {
-            healthLabel.setText("You died!");
+            healthLabel.setText("KO!");
             int deathX = player.getCell().getX();
             int deathY = player.getCell().getY();
             if (keyEvent.getCode() == KeyCode.R) {
