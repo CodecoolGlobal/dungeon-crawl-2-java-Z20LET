@@ -8,7 +8,6 @@ import com.codecool.dungeoncrawl.logic.actors.SkullPlayer;
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.modal.Modal;
-import com.codecool.dungeoncrawl.model.GameState;
 import com.codecool.dungeoncrawl.model.PlayerModel;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -139,19 +138,10 @@ public class Main extends Application {
                     break;
                 case L:
                     String load = "load";
-                    //Modal loadModal = new Modal();
-                    //loadModal.show(primaryStage, load);
-                    //dbManager.loadPlayer(loadPlayer);
-                    GameState game = dbManager.loadGame(4);
-                    InputStream loadFrom = new ByteArrayInputStream(game.getCurrentMap().getBytes());
-                    map = MapLoader.loadMap(loadFrom);
-                    PlayerModel playerLoaded = game.getPlayer();
-                    System.out.println(playerLoaded.toString());
-                    player = new Player(map.getPlayer().getCell());
-                    player.setName(playerLoaded.getPlayerName());
-                    player.setHealth(playerLoaded.getHp());
-                    player.setArmor(playerLoaded.getArmor());
-                    player.setDamage(playerLoaded.getDamage());
+                    Player
+                    Modal loadModal = new Modal();
+                    loadModal.show(primaryStage, load);
+
                     refresh();
                     break;
                 case E:
