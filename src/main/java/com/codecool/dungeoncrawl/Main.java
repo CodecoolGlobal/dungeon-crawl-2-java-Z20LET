@@ -7,6 +7,7 @@ import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.SkullPlayer;
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.actors.Player;
+import com.codecool.dungeoncrawl.logic.modal.Modal;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -33,6 +34,8 @@ public class Main extends Application {
     Label armorLabel = new Label();
     Label damageLabel = new Label();
     Label inventoryLabel = new Label();
+
+    Stage primaryStage;
 
     GameDatabaseManager dbManager;
 
@@ -120,8 +123,18 @@ public class Main extends Application {
                     }
                     break;
                 case S:
-                    Player player = map.getPlayer();
-                    dbManager.savePlayer(player);
+                    String save = "save";
+                    Player savePlayer = map.getPlayer();
+                    Modal saveModal = new Modal();
+                    saveModal.show(primaryStage, save);
+                    //dbManager.savePlayer(savePlayer);
+                    break;
+                case L:
+                    String load = "load";
+                    Player loadPlayer = map.getPlayer();
+                    Modal loadModal = new Modal();
+                    loadModal.show(primaryStage, load);
+                    //dbManager.loadPlayer(loadPlayer);
                     break;
             }
         }
