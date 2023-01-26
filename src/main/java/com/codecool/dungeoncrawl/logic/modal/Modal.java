@@ -1,6 +1,13 @@
 package com.codecool.dungeoncrawl.logic.modal;
 
+
+import com.codecool.dungeoncrawl.logic.MapLoader;
+import com.codecool.dungeoncrawl.model.GameState;
+import com.codecool.dungeoncrawl.model.PlayerModel;
+import com.sun.tools.javac.Main;
 import javafx.collections.FXCollections;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,21 +19,53 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+
+
 public class Modal {
 
     Stage dialog = new Stage();
 
-    final Button saveButton = new Button("Save");
-    final Button cancelButton = new Button("Cancel");
+    Button saveButton = new Button("Save");
 
-    final Button selectButton = new Button("Select");
+    Button cancelButton = new Button("Cancel");
 
+    Button selectButton = new Button("Select");
 
     String savedGameName = "";
 
     TextField textField;
 
     ComboBox combobox;
+
+    public Modal(){
+        this.saveButton.setOnAction(save);
+        this.cancelButton.setOnAction(cancel);
+        this.selectButton.setOnAction(select);
+    }
+
+    EventHandler save = new EventHandler() {
+        @Override
+        public void handle(Event event) {
+            System.out.println("Game Saved " + System.currentTimeMillis());
+            // TODO dbManager.save()
+            System.exit(0);
+        }
+    };
+
+    EventHandler select = new EventHandler() {
+        @Override
+        public void handle(Event event) {
+            // TODO dbManager.load();
+            dialog.close();
+        }
+    };
+
+    EventHandler cancel = new EventHandler() {
+        @Override
+        public void handle(Event event) {
+            dialog.close();
+        }
+    };
 
     public void show (Stage primaryStage, String task) {
         dialog.initModality(Modality.APPLICATION_MODAL);
@@ -43,7 +82,7 @@ public class Modal {
                 break;
             case "load":
                 dialogVbox.getChildren().add(new Text("Load your game! \n Choose a previous game state: \""));
-                String[] testString = new String[]{"egyik mentés", "másik mentés"};
+                String[] testString = new String[]{"egyik mentés időpont ", "másik mentés"}; // TODO get String list from DB
                 combobox = new ComboBox<String>(FXCollections.observableArrayList(testString));
                 combobox.getSelectionModel().select(0);
                 combobox.setId("changed");
