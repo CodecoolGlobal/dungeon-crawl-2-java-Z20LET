@@ -8,6 +8,7 @@ import com.codecool.dungeoncrawl.logic.actors.SkullPlayer;
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.modal.Modal;
+import com.codecool.dungeoncrawl.model.GameState;
 import com.codecool.dungeoncrawl.model.PlayerModel;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -42,6 +43,8 @@ public class Main extends Application {
 
     Stage primaryStage;
 
+    static int gameIndex;
+
     GameDatabaseManager dbManager;
 
     public static void main(String[] args) {
@@ -62,10 +65,11 @@ public class Main extends Application {
         ui.add(new Label("←↑→↓ - Movement"), 0, 20);
         ui.add(new Label("space - Pickup"), 0, 25);
         ui.add(new Label("R - Respawn"), 0, 30);
-        ui.add(new Label("S - save to SQL"), 0, 35);
-        ui.add(new Label("E - export JSON"), 0, 40);
-        ui.add(new Label("L - load"), 0, 45);
-        ui.add(new Label("DEMO version"), 0, 50);
+        ui.add(new Label("S - Save to SQL"), 0, 35);
+        ui.add(new Label("E - Export JSON"), 0, 40);
+        ui.add(new Label("C - Choose save"), 0, 45);
+        ui.add(new Label("L - Load save"), 0, 50);
+        ui.add(new Label("DEMO version"), 0, 55);
 
         ui.add(healthLabel, 1, 0);
         ui.add(armorLabel, 1, 5);
@@ -136,11 +140,25 @@ public class Main extends Application {
                     Modal saveModal = new Modal(savePlayer, dbManager, map);
                     saveModal.show(primaryStage, save);
                     break;
-                case L:
+                case C:
                     String load = "load";
                     Player loadPlayer = map.getPlayer();
                     Modal loadModal = new Modal(loadPlayer, dbManager, map);
                     loadModal.show(primaryStage, load);
+                    refresh();
+                    break;
+                case L:
+                    System.out.println(gameIndex);
+                    GameState game = dbManager.loadGame(gameIndex);
+                    InputStream loadFrom = new ByteArrayInputStream(game.getCurrentMap().getBytes());
+                    map = MapLoader.loadMap(loadFrom);
+                    PlayerModel playerLoaded = game.getPlayer();
+                    System.out.println(playerLoaded.toString());
+                    player = new Player(map.getPlayer().getCell());
+                    player.setName(playerLoaded.getPlayerName());
+                    player.setHealth(playerLoaded.getHp());
+                    player.setArmor(playerLoaded.getArmor());
+                    player.setDamage(playerLoaded.getDamage());
                     refresh();
                     break;
                 case E:
@@ -155,11 +173,12 @@ public class Main extends Application {
                     b.setHeaderText("Thanks for playing the demo! See you soon!");
                     b.showAndWait();
                     if (!b.isShowing()) System.exit(0);
+
             }
         }
     }
 
-    private void refresh() {
+  private void refresh() {
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (int x = 0; x < map.getWidth(); x++) {
@@ -203,4 +222,11 @@ public class Main extends Application {
         }
     }
 
+    public void callRefresh(){
+        refresh();
+    }
+
+    public static void setGameIndex(int selectedIndex) {
+        gameIndex = selectedIndex;
+    }
 }

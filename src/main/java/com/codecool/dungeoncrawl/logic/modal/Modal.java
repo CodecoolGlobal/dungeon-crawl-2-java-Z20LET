@@ -1,7 +1,8 @@
 package com.codecool.dungeoncrawl.logic.modal;
 
+
+import com.codecool.dungeoncrawl.Main;
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
-import com.codecool.dungeoncrawl.dao.PlayerDaoJdbc;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Player;
@@ -20,7 +21,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.postgresql.jdbc.PgDatabaseMetaData;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -70,6 +70,8 @@ public class Modal {
             player.setName(savedGameName);
             PlayerModel saved = gdb.savePlayer(player);
             gdb.saveGame(map, saved);
+            dialog.close();
+
             // TODO dbManager.save()
 
         }
@@ -78,16 +80,7 @@ public class Modal {
     EventHandler select = new EventHandler() {
         @Override
         public void handle(Event event) {
-            GameState game = gdb.loadGame(combobox.getVisibleRowCount());
-            InputStream loadFrom = new ByteArrayInputStream(game.getCurrentMap().getBytes());
-            map = MapLoader.loadMap(loadFrom);
-            PlayerModel playerLoaded = game.getPlayer();
-            System.out.println(playerLoaded.toString());
-            player = new Player(map.getPlayer().getCell());
-            player.setName(playerLoaded.getPlayerName());
-            player.setHealth(playerLoaded.getHp());
-            player.setArmor(playerLoaded.getArmor());
-            player.setDamage(playerLoaded.getDamage());
+            Main.setGameIndex(combobox.getSelectionModel().getSelectedIndex() + 1);
             dialog.close();
         }
     };
