@@ -35,7 +35,8 @@ public class GameDatabaseManager {
 
     public Player loadPlayer(int id) {
         PlayerModel currentPlayer = gameDao.get(id).getPlayer();
-        return new Player(null);
+        Player loadedPlayer = new Player(null);
+        return loadedPlayer;
     }
     public String loadMapStr(int id) {
         return gameDao.get(id).getCurrentMap();

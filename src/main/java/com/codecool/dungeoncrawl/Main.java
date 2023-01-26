@@ -141,6 +141,13 @@ public class Main extends Application {
                     a.setTitle("Export save file");
                     a.setHeaderText("This feature is not working yet!\nSorry for the inconvenience.");
                     a.show();
+                    break;
+                case Q:
+                    Alert b = new Alert(Alert.AlertType.INFORMATION);
+                    b.setTitle("Game quit");
+                    b.setHeaderText("Thanks for playing the demo! See you soon!");
+                    b.showAndWait();
+                    if (!b.isShowing()) System.exit(0);
             }
         }
     }
