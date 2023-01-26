@@ -6,7 +6,7 @@ import com.codecool.dungeoncrawl.logic.CellType;
 public class Axolotl extends Actor {
     public Axolotl(Cell cell) {
         super(cell);
-        setHealth(4);
+        setHealth(6);
         setArmor(0);
         setDamage(0);
     }

@@ -10,9 +10,7 @@ public class GameMap {
     private final int width;
     private final int height;
     private Cell[][] cells;
-
     private Player player;
-
     private Set<Actor> actors = new HashSet<>();
 
     public GameMap(int width, int height, CellType defaultCellType) {

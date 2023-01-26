@@ -12,6 +12,7 @@ import java.util.Set;
 
 public class Player extends Actor {
     private Set<Item> inventory;
+    private String name;
 
     public Player(Cell cell) {
         super(cell);
@@ -35,8 +36,10 @@ public class Player extends Actor {
     }
 
     public String getName(){
-        return null;
+        return name;
     }
+
+    public void setName(String name) { this.name = name; }
 
     @Override
     public String getTileName() {
