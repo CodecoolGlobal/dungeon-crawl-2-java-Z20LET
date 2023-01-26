@@ -5,12 +5,16 @@ import com.codecool.dungeoncrawl.logic.actors.Player;
 public class PlayerModel extends BaseModel {
     private String playerName;
     private int hp;
+    private int armor;
+    private int damage;
     private int x;
     private int y;
 
-    public PlayerModel(String playerName, int hp, int x, int y) {
+    public PlayerModel(String playerName, int hp, int armor, int damage, int x, int y) {
         this.playerName = playerName;
         this.hp = hp;
+        this.armor = armor;
+        this.damage = damage;
         this.x = x;
         this.y = y;
     }
@@ -20,6 +24,8 @@ public class PlayerModel extends BaseModel {
         this.x = player.getX();
         this.y = player.getY();
         this.hp = player.getHealth();
+        this.armor = player.getArmor();
+        this.damage = player.getDamage();
     }
 
     public String getPlayerName() {
@@ -36,6 +42,22 @@ public class PlayerModel extends BaseModel {
 
     public void setHp(int hp) {
         this.hp = hp;
+    }
+
+    public int getArmor() {
+        return armor;
+    }
+
+    public void setArmor(int armor) {
+        this.armor = armor;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 
     public int getX() {

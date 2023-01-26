@@ -42,10 +42,9 @@ public class MapLoader {
     public static GameMap loadMap(InputStream is) {
         int width;
         int height;
-        Scanner scanner;
         // InputStream is = new ByteArrayInputStream(mapStr.getBytes());
-        // InputStream is = MapLoader.class.getResourceAsStream("/map.txt");
-        scanner = new Scanner(is);
+        if (is == null) is = MapLoader.class.getResourceAsStream("/map.txt");
+        Scanner scanner = new Scanner(is);
 
         width = scanner.nextInt();
         height = scanner.nextInt();

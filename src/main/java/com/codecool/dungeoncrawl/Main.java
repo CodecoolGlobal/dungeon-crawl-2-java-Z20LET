@@ -30,8 +30,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class Main extends Application {
-    InputStream mapSource = MapLoader.class.getResourceAsStream("/map.txt");
-    GameMap map = MapLoader.loadMap(mapSource);
+    GameMap map = MapLoader.loadMap(null);
     Player player;
     Canvas canvas = new Canvas(
             map.getWidth() * Tiles.TILE_WIDTH,
@@ -96,7 +95,7 @@ public class Main extends Application {
             int deathX = player.getCell().getX();
             int deathY = player.getCell().getY();
             if (keyEvent.getCode() == KeyCode.R) {
-                map = MapLoader.loadMap(mapSource);
+                map = MapLoader.loadMap(null);
                 player = map.getPlayer();
                 map.getCell(deathX, deathY).setActor(new SkullPlayer(map.getCell(deathX, deathY)));
                 player.emptyInventory();
@@ -151,8 +150,8 @@ public class Main extends Application {
                     player = new Player(map.getPlayer().getCell());
                     player.setName(playerLoaded.getPlayerName());
                     player.setHealth(playerLoaded.getHp());
-                    player.setArmor(0);
-                    player.setDamage(2);
+                    player.setArmor(playerLoaded.getArmor());
+                    player.setDamage(playerLoaded.getDamage());
                     refresh();
                     break;
                 case E:
