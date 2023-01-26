@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl.logic;
 import com.codecool.dungeoncrawl.logic.actors.*;
 import com.codecool.dungeoncrawl.logic.items.*;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,12 +39,24 @@ public class MapLoader {
         actors.put(Brute.class, 'b');
     }
 
-    public static GameMap loadMap() {
-        InputStream is = MapLoader.class.getResourceAsStream("/map.txt");
-        Scanner scanner = new Scanner(is);
-        int width = scanner.nextInt();
-        int height = scanner.nextInt();
+    public static GameMap loadMap(boolean sql, int id) {
+        int width;
+        int height;
+        Scanner scanner;
 
+        if (sql) {
+            System.out.println("WIP!");
+            String mapStr = "";
+            InputStream is = new ByteArrayInputStream(mapStr.getBytes());
+            scanner = new Scanner(is);
+        }
+        else {
+            InputStream is = MapLoader.class.getResourceAsStream("/map.txt");
+            scanner = new Scanner(is);
+        }
+
+        width = scanner.nextInt();
+        height = scanner.nextInt();
         scanner.nextLine(); // empty line
 
         GameMap map = new GameMap(width, height, CellType.EMPTY);
@@ -152,7 +165,6 @@ public class MapLoader {
             }
             if (y != map.getHeight()) result += '\n';
         }
-        System.out.println(result);
         return result;
     }
 }

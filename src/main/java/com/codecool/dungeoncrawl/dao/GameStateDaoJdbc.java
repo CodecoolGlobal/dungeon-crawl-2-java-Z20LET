@@ -21,7 +21,7 @@ public class GameStateDaoJdbc implements GameStateDao {
             String sql = "INSERT INTO game_state (current_map, saved_at, player_id) VALUES (?, ?, ?)";
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, state.getCurrentMap());
-            statement.setDate(2, state.getSavedAt());
+            statement.setString(2, state.getSavedAt());
             statement.setInt(3, state.getPlayer().getId());
             statement.executeUpdate();
 
@@ -39,7 +39,7 @@ public class GameStateDaoJdbc implements GameStateDao {
             String sql = "UPDATE game_state SET current_map = ?, saved_at = ?, player_id = ?";
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, state.getCurrentMap());
-            statement.setDate(2, state.getSavedAt());
+            statement.setString(2, state.getSavedAt());
             statement.setInt(3, state.getPlayer().getId());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -58,7 +58,7 @@ public class GameStateDaoJdbc implements GameStateDao {
                 return null;
             }
             PlayerDaoJdbc currentPlayer = new PlayerDaoJdbc(dataSource);
-            GameState game = new GameState(rs.getString(1), rs.getDate(2), currentPlayer.get(rs.getInt(3)));
+            GameState game = new GameState(rs.getString(1), rs.getString(2), currentPlayer.get(rs.getInt(3)));
             game.setId(id);
             return game;
         } catch (SQLException e) {

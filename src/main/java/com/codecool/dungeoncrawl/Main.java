@@ -24,7 +24,7 @@ import javafx.stage.Stage;
 import java.sql.SQLException;
 
 public class Main extends Application {
-    GameMap map = MapLoader.loadMap();
+    GameMap map = MapLoader.loadMap(false, 0);
     Player player;
     Canvas canvas = new Canvas(
             map.getWidth() * Tiles.TILE_WIDTH,
@@ -54,8 +54,10 @@ public class Main extends Application {
         ui.add(new Label("←↑→↓ - Movement"), 0, 20);
         ui.add(new Label("space - Pickup"), 0, 25);
         ui.add(new Label("R - Respawn"), 0, 30);
-        ui.add(new Label("S - save"), 0, 35);
-        ui.add(new Label("DEMO version"), 0, 40);
+        ui.add(new Label("S - save to SQL"), 0, 35);
+        ui.add(new Label("E - export JSON"), 0, 40);
+        ui.add(new Label("L - load"), 0, 45);
+        ui.add(new Label("DEMO version"), 0, 50);
 
         ui.add(healthLabel, 1, 0);
         ui.add(armorLabel, 1, 5);
@@ -84,7 +86,7 @@ public class Main extends Application {
             int deathX = player.getCell().getX();
             int deathY = player.getCell().getY();
             if (keyEvent.getCode() == KeyCode.R) {
-                map = MapLoader.loadMap();
+                map = MapLoader.loadMap(false, 0);
                 player = map.getPlayer();
                 map.getCell(deathX, deathY).setActor(new SkullPlayer(map.getCell(deathX, deathY)));
                 player.emptyInventory();

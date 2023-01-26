@@ -8,9 +8,8 @@ import com.codecool.dungeoncrawl.model.PlayerModel;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 public class GameDatabaseManager {
@@ -30,7 +29,7 @@ public class GameDatabaseManager {
     }
 
     public void saveGame(GameMap currentMap, PlayerModel player) {
-        GameState game = new GameState(MapLoader.mapToString(currentMap), Date.valueOf(LocalDate.now()), player);
+        GameState game = new GameState(MapLoader.mapToString(currentMap), LocalDateTime.now().toString(), player);
         gameDao.add(game);
     }
 
