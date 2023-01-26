@@ -7,6 +7,7 @@ import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.SkullPlayer;
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.actors.Player;
+import com.codecool.dungeoncrawl.model.PlayerModel;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -49,7 +50,7 @@ public class Main extends Application {
         ui.add(new Label("Health: "), 0, 0);
         ui.add(new Label("Armor: "), 0, 5);
         ui.add(new Label("Damage: "), 0, 10);
-        ui.add(new Label("Inventory:   W.I.P."), 0, 15);
+        ui.add(new Label("Inventory: "), 0, 15);
         ui.add(new Label("←↑→↓ - Movement"), 0, 20);
         ui.add(new Label("space - Pickup"), 0, 25);
         ui.add(new Label("R - Respawn"), 0, 30);
@@ -121,7 +122,9 @@ public class Main extends Application {
                     break;
                 case S:
                     Player player = map.getPlayer();
-                    dbManager.savePlayer(player);
+                    player.setName("test");
+                    PlayerModel saved = dbManager.savePlayer(player);
+                    dbManager.saveGame(map, saved);
                     break;
             }
         }

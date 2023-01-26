@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.dao;
 
 import com.codecool.dungeoncrawl.logic.GameMap;
+import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.model.GameState;
 import com.codecool.dungeoncrawl.model.PlayerModel;
@@ -22,13 +23,15 @@ public class GameDatabaseManager {
         gameDao = new GameStateDaoJdbc(dataSource);
     }
 
-    public void savePlayer(Player player) {
+    public PlayerModel savePlayer(Player player) {
         PlayerModel model = new PlayerModel(player);
         playerDao.add(model);
+        return model;
     }
 
-    public void saveGame(GameMap currentMap, PlayerModel playerModel) {
-        GameState game = new GameState("", Date.valueOf(LocalDate.now()), playerModel);
+    public void saveGame(GameMap currentMap, PlayerModel player) {
+        GameState game = new GameState(MapLoader.mapToString(currentMap), Date.valueOf(LocalDate.now()), player);
+        gameDao.add(game);
     }
 
     private DataSource connect() throws SQLException {

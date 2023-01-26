@@ -39,6 +39,8 @@ public class Player extends Actor {
         return name;
     }
 
+    public void setName(String name) { this.name = name; }
+
     @Override
     public String getTileName() {
         if (!inventory.stream().noneMatch(e -> e instanceof Armor) && inventory.stream().noneMatch(e -> e instanceof Sword)) {
