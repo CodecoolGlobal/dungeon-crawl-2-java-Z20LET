@@ -1,10 +1,9 @@
 package com.codecool.dungeoncrawl.logic.modal;
 
-
-import com.codecool.dungeoncrawl.logic.MapLoader;
-import com.codecool.dungeoncrawl.model.GameState;
+import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
+import com.codecool.dungeoncrawl.logic.GameMap;
+import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.model.PlayerModel;
-import com.sun.tools.javac.Main;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -37,18 +36,35 @@ public class Modal {
 
     ComboBox combobox;
 
-    public Modal(){
+    Player player;
+
+    GameDatabaseManager gdb;
+
+    GameMap map;
+
+    public Modal(Player player, GameDatabaseManager gdb, GameMap map){
+        this.player = player;
+        this.gdb = gdb;
+        this.map = map;
         this.saveButton.setOnAction(save);
         this.cancelButton.setOnAction(cancel);
         this.selectButton.setOnAction(select);
+    }
+
+    public String getSavedGameName() {
+        return savedGameName;
     }
 
     EventHandler save = new EventHandler() {
         @Override
         public void handle(Event event) {
             System.out.println("Game Saved " + System.currentTimeMillis());
+            savedGameName = textField.getText();
+            player.setName(savedGameName);
+            PlayerModel saved = gdb.savePlayer(player);
+            gdb.saveGame(map, saved);
             // TODO dbManager.save()
-            System.exit(0);
+
         }
     };
 
@@ -67,6 +83,7 @@ public class Modal {
         }
     };
 
+
     public void show (Stage primaryStage, String task) {
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(primaryStage);
@@ -77,7 +94,6 @@ public class Modal {
                 dialogVbox.getChildren().add(new Text("Save your game! "));
                 dialogVbox.getChildren().add(saveButton);
                 textField = new TextField();
-                savedGameName = textField.getText();
                 dialogVbox.getChildren().addAll(new Label("Name: "), textField);
                 break;
             case "load":
@@ -95,4 +111,5 @@ public class Modal {
         dialog.setScene(dialogScene);
         dialog.show();
     }
+
 }

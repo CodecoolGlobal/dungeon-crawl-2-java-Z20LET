@@ -133,25 +133,23 @@ public class Main extends Application {
                 case S:
                     String save = "save";
                     Player savePlayer = map.getPlayer();
-                    Modal saveModal = new Modal();
+                    Modal saveModal = new Modal(savePlayer, dbManager, map);
                     saveModal.show(primaryStage, save);
-                    //dbManager.savePlayer(savePlayer);
                     break;
-                case L:
+             /*   case L:
                     String load = "load";
                     Player loadPlayer = map.getPlayer();
                     Modal loadModal = new Modal();
                     loadModal.show(primaryStage, load);
                     //dbManager.loadPlayer(loadPlayer);
                     Player player = map.getPlayer();
-                    player.setName("test");
                     PlayerModel saved = dbManager.savePlayer(player);
                     dbManager.saveGame(map, saved);
                     break;
                 case L:
                     String mapStr = dbManager.loadMapStr(16);
                     InputStream loadFrom = new ByteArrayInputStream(mapStr.getBytes());
-                    break;
+                    break;*/
                 case E:
                     Alert a = new Alert(Alert.AlertType.ERROR);
                     a.setTitle("Export save file");
