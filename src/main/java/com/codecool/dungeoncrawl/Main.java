@@ -146,7 +146,6 @@ public class Main extends Application {
                     InputStream loadFrom = new ByteArrayInputStream(game.getCurrentMap().getBytes());
                     map = MapLoader.loadMap(loadFrom);
                     PlayerModel playerLoaded = game.getPlayer();
-                    System.out.println(playerLoaded.toString());
                     player = new Player(map.getPlayer().getCell());
                     player.setName(playerLoaded.getPlayerName());
                     player.setHealth(playerLoaded.getHp());
