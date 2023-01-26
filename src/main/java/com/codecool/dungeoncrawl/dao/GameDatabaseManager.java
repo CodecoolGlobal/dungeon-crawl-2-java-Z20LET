@@ -10,6 +10,7 @@ import org.postgresql.ds.PGSimpleDataSource;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 public class    GameDatabaseManager {
@@ -58,5 +59,9 @@ public class    GameDatabaseManager {
         System.out.println("Connection ok.");
 
         return dataSource;
+    }
+
+    public List<String> getLoadNames(){
+        return playerDao.getPlayerNames();
     }
 }

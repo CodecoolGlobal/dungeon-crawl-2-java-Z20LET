@@ -20,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.postgresql.jdbc.PgDatabaseMetaData;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -47,16 +48,14 @@ public class Modal {
 
     GameMap map;
 
-    PlayerDaoJdbc playerDaoJdbc;
 
-    public Modal(Player player, GameDatabaseManager gdb, GameMap map, PlayerDaoJdbc playerDaoJdbc){
+    public Modal(Player player, GameDatabaseManager gdb, GameMap map){
         this.player = player;
         this.gdb = gdb;
         this.map = map;
         this.saveButton.setOnAction(save);
         this.cancelButton.setOnAction(cancel);
         this.selectButton.setOnAction(select);
-        this.playerDaoJdbc = playerDaoJdbc;
     }
 
     public String getSavedGameName() {
@@ -79,7 +78,7 @@ public class Modal {
     EventHandler select = new EventHandler() {
         @Override
         public void handle(Event event) {
-            GameState game = gdb.loadGame(combobox.get);
+            GameState game = gdb.loadGame(combobox.getVisibleRowCount());
             InputStream loadFrom = new ByteArrayInputStream(game.getCurrentMap().getBytes());
             map = MapLoader.loadMap(loadFrom);
             PlayerModel playerLoaded = game.getPlayer();
@@ -117,7 +116,7 @@ public class Modal {
                 dialogVbox.getChildren().add(new Text("Load your game! \n Choose a previous game state: "));
                  // TODO get String list from DB
 
-                combobox = new ComboBox<String>(PlayerDaoJdbc.);
+                combobox = new ComboBox<String>(FXCollections.observableArrayList(gdb.getLoadNames()));
                 combobox.getSelectionModel().select(0);
                 combobox.setId("changed");
                 dialogVbox.getChildren().add(combobox);

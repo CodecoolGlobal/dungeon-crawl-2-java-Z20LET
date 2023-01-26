@@ -138,20 +138,8 @@ public class Main extends Application {
                     break;
                 case L:
                     String load = "load";
-                    //Modal loadModal = new Modal();
-                    //loadModal.show(primaryStage, load);
-                    //dbManager.loadPlayer(loadPlayer);
-                    GameState game = dbManager.loadGame(4);
-                    InputStream loadFrom = new ByteArrayInputStream(game.getCurrentMap().getBytes());
-                    map = MapLoader.loadMap(loadFrom);
-                    PlayerModel playerLoaded = game.getPlayer();
-                    player = new Player(map.getPlayer().getCell());
-                    player.setName(playerLoaded.getPlayerName());
-                    player.setHealth(playerLoaded.getHp());
-                    player.setArmor(playerLoaded.getArmor());
-                    player.setDamage(playerLoaded.getDamage());
-                    //Player
-                    Modal loadModal = new Modal();
+                    Player loadPlayer = map.getPlayer();
+                    Modal loadModal = new Modal(loadPlayer, dbManager, map);
                     loadModal.show(primaryStage, load);
                     refresh();
                     break;
