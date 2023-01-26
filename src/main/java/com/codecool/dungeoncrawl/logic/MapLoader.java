@@ -39,21 +39,14 @@ public class MapLoader {
         actors.put(Brute.class, 'b');
     }
 
-    public static GameMap loadMap(boolean sql, int id) {
+    public static GameMap loadMap(InputStream is) {
         int width;
         int height;
         Scanner scanner;
-
-        if (sql) {
-            System.out.println("WIP!");
-            String mapStr = "";
-            InputStream is = new ByteArrayInputStream(mapStr.getBytes());
-            scanner = new Scanner(is);
-        }
-        else {
-            InputStream is = MapLoader.class.getResourceAsStream("/map.txt");
-            scanner = new Scanner(is);
-        }
+        // System.out.println("WIP!");
+        // InputStream is = new ByteArrayInputStream(mapStr.getBytes());
+        // InputStream is = MapLoader.class.getResourceAsStream("/map.txt");
+        scanner = new Scanner(is);
 
         width = scanner.nextInt();
         height = scanner.nextInt();

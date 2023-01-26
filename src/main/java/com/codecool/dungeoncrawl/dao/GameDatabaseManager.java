@@ -33,6 +33,14 @@ public class GameDatabaseManager {
         gameDao.add(game);
     }
 
+    public Player loadPlayer(int id) {
+        PlayerModel currentPlayer = gameDao.get(id).getPlayer();
+        return new Player(null);
+    }
+    public String loadMapStr(int id) {
+        return gameDao.get(id).getCurrentMap();
+    }
+
     private DataSource connect() throws SQLException {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         Map<String, String> envs = System.getenv();
