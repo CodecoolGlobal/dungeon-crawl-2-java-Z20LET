@@ -10,6 +10,7 @@ public class PlayerModel extends BaseModel {
 
     public PlayerModel(String playerName, int hp, int x, int y) {
         this.playerName = playerName;
+        this.hp = hp;
         this.x = x;
         this.y = y;
     }

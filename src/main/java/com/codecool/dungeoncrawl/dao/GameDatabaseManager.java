@@ -33,13 +33,14 @@ public class GameDatabaseManager {
         gameDao.add(game);
     }
 
+    public GameState loadGame(int id) {
+        return gameDao.get(id);
+    }
+
     public Player loadPlayer(int id) {
         PlayerModel currentPlayer = gameDao.get(id).getPlayer();
         Player loadedPlayer = new Player(null);
         return loadedPlayer;
-    }
-    public String loadMapStr(int id) {
-        return gameDao.get(id).getCurrentMap();
     }
 
     private DataSource connect() throws SQLException {

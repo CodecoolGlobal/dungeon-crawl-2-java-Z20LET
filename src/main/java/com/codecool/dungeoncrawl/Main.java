@@ -8,6 +8,7 @@ import com.codecool.dungeoncrawl.logic.actors.SkullPlayer;
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.logic.modal.Modal;
+import com.codecool.dungeoncrawl.model.GameState;
 import com.codecool.dungeoncrawl.model.PlayerModel;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -26,6 +27,7 @@ import javafx.stage.Stage;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.List;
 
 public class Main extends Application {
     InputStream mapSource = MapLoader.class.getResourceAsStream("/map.txt");
@@ -136,20 +138,23 @@ public class Main extends Application {
                     Modal saveModal = new Modal(savePlayer, dbManager, map);
                     saveModal.show(primaryStage, save);
                     break;
-             /*   case L:
-                    String load = "load";
-                    Player loadPlayer = map.getPlayer();
-                    Modal loadModal = new Modal();
-                    loadModal.show(primaryStage, load);
-                    //dbManager.loadPlayer(loadPlayer);
-                    Player player = map.getPlayer();
-                    PlayerModel saved = dbManager.savePlayer(player);
-                    dbManager.saveGame(map, saved);
-                    break;
                 case L:
-                    String mapStr = dbManager.loadMapStr(16);
-                    InputStream loadFrom = new ByteArrayInputStream(mapStr.getBytes());
-                    break;*/
+                    String load = "load";
+                    //Modal loadModal = new Modal();
+                    //loadModal.show(primaryStage, load);
+                    //dbManager.loadPlayer(loadPlayer);
+                    GameState game = dbManager.loadGame(4);
+                    InputStream loadFrom = new ByteArrayInputStream(game.getCurrentMap().getBytes());
+                    map = MapLoader.loadMap(loadFrom);
+                    PlayerModel playerLoaded = game.getPlayer();
+                    System.out.println(playerLoaded.toString());
+                    player = new Player(map.getPlayer().getCell());
+                    player.setName(playerLoaded.getPlayerName());
+                    player.setHealth(playerLoaded.getHp());
+                    player.setArmor(0);
+                    player.setDamage(2);
+                    refresh();
+                    break;
                 case E:
                     Alert a = new Alert(Alert.AlertType.ERROR);
                     a.setTitle("Export save file");

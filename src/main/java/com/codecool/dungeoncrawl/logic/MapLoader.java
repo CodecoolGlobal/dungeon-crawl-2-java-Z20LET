@@ -43,7 +43,6 @@ public class MapLoader {
         int width;
         int height;
         Scanner scanner;
-        // System.out.println("WIP!");
         // InputStream is = new ByteArrayInputStream(mapStr.getBytes());
         // InputStream is = MapLoader.class.getResourceAsStream("/map.txt");
         scanner = new Scanner(is);
