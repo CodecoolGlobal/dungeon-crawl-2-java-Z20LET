@@ -1,12 +1,10 @@
 package com.codecool.dungeoncrawl.dao;
 
-import com.codecool.dungeoncrawl.logic.actors.Player;
 import com.codecool.dungeoncrawl.model.GameState;
-import com.codecool.dungeoncrawl.model.PlayerModel;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameStateDaoJdbc implements GameStateDao {
@@ -68,6 +66,19 @@ public class GameStateDaoJdbc implements GameStateDao {
 
     @Override
     public List<GameState> getAll() {
-        return null;
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "SELECT id, current_map, saved_at, player_id FROM game_state";
+            ResultSet rs = conn.createStatement().executeQuery(sql);
+            PlayerDaoJdbc currentPlayer = new PlayerDaoJdbc(dataSource);
+            List<GameState> result = new ArrayList<>();
+            while (rs.next()) {
+                GameState game = new GameState(rs.getString(1), rs.getString(2), currentPlayer.get(rs.getInt(3)));
+                game.setId(rs.getInt(1));
+                result.add(game);
+            }
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error while reading all saves", e);
+        }
     }
 }

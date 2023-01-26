@@ -1,9 +1,12 @@
 package com.codecool.dungeoncrawl.dao;
 
+import com.codecool.dungeoncrawl.logic.actors.Player;
+import com.codecool.dungeoncrawl.model.GameState;
 import com.codecool.dungeoncrawl.model.PlayerModel;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerDaoJdbc implements PlayerDao {
@@ -68,6 +71,18 @@ public class PlayerDaoJdbc implements PlayerDao {
 
     @Override
     public List<PlayerModel> getAll() {
-        return null;
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "SELECT id, player_name, hp, x, y FROM player";
+            ResultSet rs = conn.createStatement().executeQuery(sql);
+            List<PlayerModel> result = new ArrayList<>();
+            while (rs.next()) {
+                PlayerModel player = new PlayerModel(rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getInt(4));
+                player.setId(rs.getInt(1));
+                result.add(player);
+            }
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error while reading all saves", e);
+        }
     }
 }
