@@ -7,11 +7,13 @@ import com.codecool.dungeoncrawl.logic.actors.Actor;
 import com.codecool.dungeoncrawl.logic.actors.SkullPlayer;
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.actors.Player;
+import com.codecool.dungeoncrawl.model.PlayerModel;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -20,10 +22,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.sql.SQLException;
 
 public class Main extends Application {
-    GameMap map = MapLoader.loadMap();
+    InputStream mapSource = MapLoader.class.getResourceAsStream("/map.txt");
+    GameMap map = MapLoader.loadMap(mapSource);
     Player player;
     Canvas canvas = new Canvas(
             map.getWidth() * Tiles.TILE_WIDTH,
@@ -49,12 +54,14 @@ public class Main extends Application {
         ui.add(new Label("Health: "), 0, 0);
         ui.add(new Label("Armor: "), 0, 5);
         ui.add(new Label("Damage: "), 0, 10);
-        ui.add(new Label("Inventory:   W.I.P."), 0, 15);
+        ui.add(new Label("Inventory: "), 0, 15);
         ui.add(new Label("←↑→↓ - Movement"), 0, 20);
         ui.add(new Label("space - Pickup"), 0, 25);
         ui.add(new Label("R - Respawn"), 0, 30);
-        ui.add(new Label("S - save"), 0, 35);
-        ui.add(new Label("DEMO version"), 0, 40);
+        ui.add(new Label("S - save to SQL"), 0, 35);
+        ui.add(new Label("E - export JSON"), 0, 40);
+        ui.add(new Label("L - load"), 0, 45);
+        ui.add(new Label("DEMO version"), 0, 50);
 
         ui.add(healthLabel, 1, 0);
         ui.add(armorLabel, 1, 5);
@@ -83,7 +90,7 @@ public class Main extends Application {
             int deathX = player.getCell().getX();
             int deathY = player.getCell().getY();
             if (keyEvent.getCode() == KeyCode.R) {
-                map = MapLoader.loadMap();
+                map = MapLoader.loadMap(mapSource);
                 player = map.getPlayer();
                 map.getCell(deathX, deathY).setActor(new SkullPlayer(map.getCell(deathX, deathY)));
                 player.emptyInventory();
@@ -121,8 +128,26 @@ public class Main extends Application {
                     break;
                 case S:
                     Player player = map.getPlayer();
-                    dbManager.savePlayer(player);
+                    player.setName("test");
+                    PlayerModel saved = dbManager.savePlayer(player);
+                    dbManager.saveGame(map, saved);
                     break;
+                case L:
+                    String mapStr = dbManager.loadMapStr(16);
+                    InputStream loadFrom = new ByteArrayInputStream(mapStr.getBytes());
+                    break;
+                case E:
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setTitle("Export save file");
+                    a.setHeaderText("This feature is not working yet!\nSorry for the inconvenience.");
+                    a.show();
+                    break;
+                case Q:
+                    Alert b = new Alert(Alert.AlertType.INFORMATION);
+                    b.setTitle("Game quit");
+                    b.setHeaderText("Thanks for playing the demo! See you soon!");
+                    b.showAndWait();
+                    if (!b.isShowing()) System.exit(0);
             }
         }
     }
@@ -164,7 +189,10 @@ public class Main extends Application {
         try {
             dbManager.setup();
         } catch (SQLException ex) {
-            System.out.println("Cannot connect to database.");
+            Alert a = new Alert(Alert.AlertType.WARNING);
+            a.setTitle("SQL not connected");
+            a.setHeaderText("The game cannot connect to the database.\nEither there is none or the system variables are incorrect.");
+            a.show();
         }
     }
 }
