@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-public class GameDatabaseManager {
+public class    GameDatabaseManager {
     private PlayerDao playerDao;
     private GameStateDao gameDao;
 

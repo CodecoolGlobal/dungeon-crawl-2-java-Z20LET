@@ -1,8 +1,11 @@
 package com.codecool.dungeoncrawl.logic.modal;
 
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
+import com.codecool.dungeoncrawl.dao.PlayerDaoJdbc;
 import com.codecool.dungeoncrawl.logic.GameMap;
+import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Player;
+import com.codecool.dungeoncrawl.model.GameState;
 import com.codecool.dungeoncrawl.model.PlayerModel;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
@@ -18,6 +21,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 
 public class Modal {
@@ -42,13 +47,16 @@ public class Modal {
 
     GameMap map;
 
-    public Modal(Player player, GameDatabaseManager gdb, GameMap map){
+    PlayerDaoJdbc playerDaoJdbc;
+
+    public Modal(Player player, GameDatabaseManager gdb, GameMap map, PlayerDaoJdbc playerDaoJdbc){
         this.player = player;
         this.gdb = gdb;
         this.map = map;
         this.saveButton.setOnAction(save);
         this.cancelButton.setOnAction(cancel);
         this.selectButton.setOnAction(select);
+        this.playerDaoJdbc = playerDaoJdbc;
     }
 
     public String getSavedGameName() {
@@ -71,7 +79,16 @@ public class Modal {
     EventHandler select = new EventHandler() {
         @Override
         public void handle(Event event) {
-            // TODO dbManager.load();
+            GameState game = gdb.loadGame(combobox.get);
+            InputStream loadFrom = new ByteArrayInputStream(game.getCurrentMap().getBytes());
+            map = MapLoader.loadMap(loadFrom);
+            PlayerModel playerLoaded = game.getPlayer();
+            System.out.println(playerLoaded.toString());
+            player = new Player(map.getPlayer().getCell());
+            player.setName(playerLoaded.getPlayerName());
+            player.setHealth(playerLoaded.getHp());
+            player.setArmor(playerLoaded.getArmor());
+            player.setDamage(playerLoaded.getDamage());
             dialog.close();
         }
     };
@@ -97,9 +114,10 @@ public class Modal {
                 dialogVbox.getChildren().addAll(new Label("Name: "), textField);
                 break;
             case "load":
-                dialogVbox.getChildren().add(new Text("Load your game! \n Choose a previous game state: \""));
-                String[] testString = new String[]{"egyik mentés időpont ", "másik mentés"}; // TODO get String list from DB
-                combobox = new ComboBox<String>(FXCollections.observableArrayList(testString));
+                dialogVbox.getChildren().add(new Text("Load your game! \n Choose a previous game state: "));
+                 // TODO get String list from DB
+
+                combobox = new ComboBox<String>(PlayerDaoJdbc.);
                 combobox.getSelectionModel().select(0);
                 combobox.setId("changed");
                 dialogVbox.getChildren().add(combobox);
