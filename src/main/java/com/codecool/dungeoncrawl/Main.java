@@ -150,12 +150,10 @@ public class Main extends Application {
                     refresh();
                     break;
                 case L:
-                    System.out.println(gameIndex);
                     GameState game = dbManager.loadGame(gameIndex);
                     InputStream loadFrom = new ByteArrayInputStream(game.getCurrentMap().getBytes());
                     map = MapLoader.loadMap(loadFrom);
                     PlayerModel playerLoaded = game.getPlayer();
-                    System.out.println(playerLoaded.toString());
                     player = new Player(map.getPlayer().getCell());
                     player.setName(playerLoaded.getPlayerName());
                     player.setHealth(playerLoaded.getHp());
