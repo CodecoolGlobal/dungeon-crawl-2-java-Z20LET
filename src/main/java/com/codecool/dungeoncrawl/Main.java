@@ -69,7 +69,9 @@ public class Main extends Application {
         ui.add(new Label("E - Export JSON"), 0, 40);
         ui.add(new Label("C - Choose save"), 0, 45);
         ui.add(new Label("L - Load save"), 0, 50);
-        ui.add(new Label("DEMO version"), 0, 55);
+        ui.add(new Label("Q - Quit game"), 0, 55);
+        ui.add(new Label("DEMO version"), 0, 60);
+
 
         ui.add(healthLabel, 1, 0);
         ui.add(armorLabel, 1, 5);

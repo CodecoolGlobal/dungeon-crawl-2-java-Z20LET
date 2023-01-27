@@ -72,8 +72,6 @@ public class Modal {
             gdb.saveGame(map, saved);
             dialog.close();
 
-            // TODO dbManager.save()
-
         }
     };
 
@@ -106,7 +104,7 @@ public class Modal {
                 dialogVbox.getChildren().addAll(new Label("Name: "), textField);
                 break;
             case "load":
-                dialogVbox.getChildren().add(new Text("Load your game! \n Choose a previous game state: "));
+                dialogVbox.getChildren().add(new Text("Choose a previous game state: "));
                  // TODO get String list from DB
 
                 combobox = new ComboBox<String>(FXCollections.observableArrayList(gdb.getLoadNames()));
