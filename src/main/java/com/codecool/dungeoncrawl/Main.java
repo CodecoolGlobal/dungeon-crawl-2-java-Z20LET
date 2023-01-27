@@ -222,10 +222,6 @@ public class Main extends Application {
         }
     }
 
-    public void callRefresh(){
-        refresh();
-    }
-
     public static void setGameIndex(int selectedIndex) {
         gameIndex = selectedIndex;
     }

@@ -103,9 +103,5 @@ public class PlayerDaoJdbc implements PlayerDao {
         } catch (SQLException e) {
             throw new RuntimeException("Error while reading all saves", e);
         }
-
-
     }
-
-
 }

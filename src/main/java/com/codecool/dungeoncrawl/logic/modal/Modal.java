@@ -4,9 +4,7 @@ package com.codecool.dungeoncrawl.logic.modal;
 import com.codecool.dungeoncrawl.Main;
 import com.codecool.dungeoncrawl.dao.GameDatabaseManager;
 import com.codecool.dungeoncrawl.logic.GameMap;
-import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.actors.Player;
-import com.codecool.dungeoncrawl.model.GameState;
 import com.codecool.dungeoncrawl.model.PlayerModel;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
@@ -21,9 +19,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 
 
 public class Modal {
@@ -91,11 +86,19 @@ public class Modal {
     };
 
 
-    public void show (Stage primaryStage, String task) {
+    public void show(Stage primaryStage, String task) {
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(primaryStage);
         VBox dialogVbox = new VBox(20);
         dialogVbox.setAlignment(Pos.CENTER);
+        selectDialogBody(task, dialogVbox);
+        dialogVbox.getChildren().add(cancelButton);
+        Scene dialogScene = new Scene(dialogVbox, 300, 200);
+        dialog.setScene(dialogScene);
+        dialog.show();
+    }
+
+    private void selectDialogBody(String task, VBox dialogVbox) {
         switch (task){
             case "save":
                 dialogVbox.getChildren().add(new Text("Save your game! "));
@@ -114,10 +117,5 @@ public class Modal {
                 dialogVbox.getChildren().add(selectButton);
                 break;
         }
-        dialogVbox.getChildren().add(cancelButton);
-        Scene dialogScene = new Scene(dialogVbox, 300, 200);
-        dialog.setScene(dialogScene);
-        dialog.show();
     }
-
 }
