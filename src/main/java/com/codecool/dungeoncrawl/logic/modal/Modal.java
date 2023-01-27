@@ -101,12 +101,14 @@ public class Modal {
     private void selectDialogBody(String task, VBox dialogVbox) {
         switch (task){
             case "save":
-                dialogVbox.getChildren().add(new Text("Save your game! "));
+                dialog.setTitle("Save game");
+                dialogVbox.getChildren().add(new Text("Save your game here! "));
                 dialogVbox.getChildren().add(saveButton);
                 textField = new TextField();
                 dialogVbox.getChildren().addAll(new Label("Name: "), textField);
                 break;
             case "load":
+                dialog.setTitle("Select game to load");
                 dialogVbox.getChildren().add(new Text("Choose a previous game state: "));
                  // TODO get String list from DB
 

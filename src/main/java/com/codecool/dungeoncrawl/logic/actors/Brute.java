@@ -6,7 +6,7 @@ import com.codecool.dungeoncrawl.logic.CellType;
 public class Brute extends Actor {
     public Brute(Cell cell) {
         super(cell);
-        setHealth(22);
+        setHealth(26);
         setArmor(2);
         setDamage(7);
     }

@@ -27,7 +27,6 @@ import javafx.stage.Stage;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.sql.SQLException;
-import java.util.List;
 
 public class Main extends Application {
     GameMap map = MapLoader.loadMap(null);
@@ -40,11 +39,8 @@ public class Main extends Application {
     Label armorLabel = new Label();
     Label damageLabel = new Label();
     Label inventoryLabel = new Label();
-
     Stage primaryStage;
-
     static int gameIndex;
-
     GameDatabaseManager dbManager;
 
     public static void main(String[] args) {
