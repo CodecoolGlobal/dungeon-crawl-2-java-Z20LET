@@ -1,5 +1,5 @@
 Blue Dungeon - Demo
-Made by Marci & Bence @ Codecool - WIP - Do not share!
+Made by Marci & Bence @ Codecool - Sprint 2 WIP - Do not share!
 Blue Dungeon is a dungeon crawler style game, where you have to pick up weapons, kill monsters and advance.
 Tutorial:
 There is currently one level with monsters and items.
@@ -10,6 +10,8 @@ R - respawn (if dead)
 S - save to SQL, local database required
 C - select save from SQL
 L - load the selected save file (always use C first)
+E - extract to JSON (not implemented yet)
+Q - quit the game
 How to play:
 Use the arrow keys to move.
 When standing on the same tile as an item, press space to pick it up.
