@@ -7,11 +7,17 @@ This project was a school assignment at our programming school Codecool, of a du
 
 ## Installation guide
 
-You will need at least Java JRE 8 or JDK 16 to be able to execute the program. Both are recommended to be installed for a flawless gameplay. After installation, navigate [here](../out/artifacts/BlueDungeon2Demo) and download the folder's contents (JAR file and help text). Preferably, you may download the RAR file and use WinRAR to unzip the same contents. Please read the help text carefully for a gameplay introduction and other useful hints.
+You will need at least Java JRE 8 or JDK 16 to be able to execute the program. Both are recommended to be installed for a flawless gameplay. After installation, navigate [here](../development/out/artifacts/BlueDungeon2Demo) and download the folder's contents (JAR file and help text). Preferably, you may download the RAR file and use WinRAR to unzip the same contents. Please read the help text carefully for a gameplay introduction and other useful hints.
 
 ## How to play
 
-After installing the necessary prerequisites, navigate to your downloads or wherever the JAR is downloaded and double click it to execute. If the window resolution is not acceptable, press F11 or Alt+Enter to switch to fullscreen. While in-game, press Q to exit. Please check the in-game instructions and the help text included with the game file fore more help.
+After installing the necessary prerequisites, navigate to your downloads or wherever the JAR is downloaded and double click it to execute. If the window resolution is not acceptable, press F11 or Alt+Enter to switch to fullscreen. While in-game, press Q to exit. Please check the in-game instructions and the help text included with the game file fore more help. See the top right corner in the game window for controls.
+
+![image](../development/screen1.png)
+
+The player controls the blue character and with each movement all other entities move as well, like in a turn-based game.
+
+![image](../development/screen2.png)
 
 ## Features, tech stack
 
