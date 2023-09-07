@@ -13,11 +13,11 @@ You will need at least Java JRE 8 or JDK 16 to be able to execute the program. B
 
 After installing the necessary prerequisites, navigate to your downloads or wherever the JAR is downloaded and double click it to execute. If the window resolution is not acceptable, press F11 or Alt+Enter to switch to fullscreen. While in-game, press Q to exit. Please check the in-game instructions and the help text included with the game file fore more help. See the top right corner in the game window for controls.
 
-![image](../development/screen1.png)
+![image](../development/screen1.PNG)
 
 The player controls the blue character and with each movement all other entities move as well, like in a turn-based game.
 
-![image](../development/screen2.png)
+![image](../development/screen2.PNG)
 
 ## Features, tech stack
 
